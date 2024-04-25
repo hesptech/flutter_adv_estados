@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_adv_estados/bloc/users/users_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/bloc/user/user_bloc.dart';
@@ -55,9 +56,29 @@ class InformacionUsuario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        _UserView(user: user),
+
+        const _UsersView()
+      ],
+    );
+  }
+
+}
+
+class _UserView extends StatelessWidget {
+  const _UserView({
+    required this.user,
+  });
+
+  final User user;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: double.infinity,
+      //height: double.infinity,
       padding: const EdgeInsets.all(20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,5 +101,24 @@ class InformacionUsuario extends StatelessWidget {
       ),
     );
   }
+}
 
+
+class _UsersView extends StatelessWidget {
+  const _UsersView();
+
+  @override
+  Widget build(BuildContext context) {
+
+    final usersBloc = context.watch<UsersBloc>();
+    final usersExist = usersBloc.state.existUsers;
+    final usersLenght = usersBloc.state.howManyUsers;
+
+    return Column(
+      children: [
+        usersExist ? const Text('number of users:') : const Text('no users'),
+        Text(usersLenght.toString())
+      ],
+    ) ;
+  }
 }

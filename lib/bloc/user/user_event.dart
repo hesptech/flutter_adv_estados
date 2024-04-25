@@ -19,3 +19,9 @@ class AddProfession extends UserEvent {
 }
 
 class DeleteUser extends UserEvent {}
+
+
+class AddUser extends UserEvent {
+  final User user;
+  AddUser( this.user );
+}

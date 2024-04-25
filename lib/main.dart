@@ -2,11 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/bloc/user/user_bloc.dart';
-
+import '/bloc/users/users_bloc.dart';
 import '/pages/pagina2_page.dart';
 import '/pages/pagina1_page.dart';
  
-void main() => runApp( const MyApp());
+void main() => runApp( const BlocsProviders() );
+
+
+class BlocsProviders extends StatelessWidget {
+  const BlocsProviders({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => UsersBloc(), lazy: false, ),
+      ],
+      child: const MyApp(),
+    );
+  }
+}
  
 class MyApp extends StatelessWidget {
   
