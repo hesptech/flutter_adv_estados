@@ -22,9 +22,9 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   void _addUserHandler( AddUser event, Emitter<UsersState> emit ) {
     
     final newUser = User(
-      nombre: 'user',
-      edad: 12,
-      profesiones: []
+      nombre: event.user.nombre,
+      edad: event.user.edad,
+      profesiones: event.user.profesiones,
     );
 
     emit(state.copyWith(users: [...state.users, newUser], existUsers: true));

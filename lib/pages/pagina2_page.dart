@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_adv_estados/bloc/users/users_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +17,8 @@ class Pagina2Page extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final userBloc = BlocProvider.of<UserBloc>(context, listen: false );
+    int min = 18;
+    int max = 60;
 
     return Scaffold(
       appBar: AppBar(
@@ -31,7 +35,7 @@ class Pagina2Page extends StatelessWidget {
 
                 final newUser = User(
                   nombre: RandomGenerator.getRandomName(),
-                  edad: 36,
+                  edad: min + Random().nextInt((max + 1) - min),
                   profesiones: [ 'FullStack Developer']
                 );
 
@@ -40,13 +44,15 @@ class Pagina2Page extends StatelessWidget {
                 // BlocProvider.of<UserBloc>(context, listen: false ).add( ActivateUser(newUser) );
                 userBloc.add( ActivateUser(newUser) );
               },
-              child: const Text('Establecer Usuario', style: TextStyle( color: Colors.white ) )
+              child: const Text('Create random User', style: TextStyle( color: Colors.white ) )
             ),
 
             MaterialButton(
               color: Colors.blue,
               onPressed: () {
-                userBloc.add( ChangeUserAge(25) );
+// from 1 to 10 included  
+                int randomnum = min + Random().nextInt((max + 1) - min);
+                userBloc.add( ChangeUserAge(randomnum) );
               },
               child: const Text('Cambiar Edad', style: TextStyle( color: Colors.white ) )
             ),
