@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/bloc/user/user_bloc.dart';
 import '/models/user.dart';
+import '/config/config.dart';
 
 
 class Pagina1Page extends StatelessWidget {
@@ -14,7 +15,7 @@ class Pagina1Page extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pagina 1'),
+        title: const Text('Page 1'),
         actions: [
           IconButton(
             icon: const Icon( Icons.delete_outline ),
@@ -30,9 +31,37 @@ class Pagina1Page extends StatelessWidget {
 
           return state.existUser
             ? InformacionUsuario( user: state.user! )
-            : const Center(
-              child: Text('No hay usuario seleccionado'),
-            );
+            : Center(
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 100.0),
+                    child: Text('no Users'),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: MaterialButton(
+                      color: Colors.blue,
+                      onPressed: () {
+                  
+                        final newUser = User(
+                          nombre: RandomGenerator.getRandomName(),
+                          edad: 36,
+                          profesiones: [ 'FullStack Developer']
+                        );
+                  
+                        context.read<UsersBloc>().addUser(newUser);
+                  
+                        // BlocProvider.of<UserBloc>(context, listen: false ).add( ActivateUser(newUser) );
+                        BlocProvider.of<UserBloc>(context, listen: false ).add( ActivateUser(newUser) );
+                      },
+                      child: const Text('create random User...', style: TextStyle( color: Colors.white ) )
+                    ),
+                  ),                  
+                      ],
+                    ),
+                  );
     
         },
       ),
@@ -58,6 +87,29 @@ class InformacionUsuario extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
+
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: MaterialButton(
+                color: Colors.blue,
+                onPressed: () {
+            
+                  final newUser = User(
+                    nombre: RandomGenerator.getRandomName(),
+                    edad: 36,
+                    profesiones: [ 'FullStack Developer']
+                  );
+            
+                  context.read<UsersBloc>().addUser(newUser);
+            
+                  // BlocProvider.of<UserBloc>(context, listen: false ).add( ActivateUser(newUser) );
+                  BlocProvider.of<UserBloc>(context, listen: false ).add( ActivateUser(newUser) );
+                },
+                child: const Text('Create random User', style: TextStyle( color: Colors.white ) )
+              ),
+            ),
+
+
         _UserView(user: user),
 
         const _UsersView()
@@ -84,13 +136,14 @@ class _UserView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
-          const Text('General', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold ) ),
+          const Text('New User:', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold ) ),
           const Divider(),
 
-          ListTile( title: Text('Nombre: ${ user.nombre }') ),
-          ListTile( title: Text('Edad: ${ user.edad }') ),
+          ListTile( title: Text('Name: ${ user.nombre }') ),
+          ListTile( title: Text('Age: ${ user.edad }') ),
 
-          const Text('Profesiones', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold ) ),
+          const SizedBox(height: 10.0,),
+          const Text('Profesions:', style: TextStyle( fontSize: 16, fontWeight: FontWeight.bold ) ),
           const Divider(),
 
           ...user.profesiones.map( 
@@ -114,11 +167,21 @@ class _UsersView extends StatelessWidget {
     final usersExist = usersBloc.state.existUsers;
     final usersLenght = usersBloc.state.howManyUsers;
 
-    return Column(
-      children: [
-        usersExist ? const Text('number of users:') : const Text('no users'),
-        Text(usersLenght.toString())
-      ],
+    return Container(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+    
+          const Text('List of Users:', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold ) ),
+          const Divider(),
+
+          usersExist ? 
+          ListTile( title: Text('number of users: $usersLenght ') ) : 
+          const ListTile( title: Text('number of users:: 0 ') ) ,
+    
+        ],
+      ),
     ) ;
   }
 }

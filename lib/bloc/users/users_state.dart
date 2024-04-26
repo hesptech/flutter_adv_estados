@@ -20,13 +20,3 @@ class UsersState {
     users: users ?? this.users
   );
 }
-
-/* class UsersInitialState extends UsersState {
-  const UsersInitialState(): super( existUsers: false, users: const [] );
-} */
-
-/* class UserSetState extends UserState {
-  final User newUser;
-  const UserSetState(this.newUser)
-    : super(existUser: true, user: newUser );
-} */
