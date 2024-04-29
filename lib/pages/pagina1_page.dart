@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,9 +29,7 @@ class Pagina1Page extends StatelessWidget {
       body: BlocBuilder<UserBloc, UserState>(
         builder: ( _ , state) {  
 
-          //final usersBloc = context.watch<UsersBloc>().state.users;
-          int min = 18;
-          int max = 60;        
+          //final usersBloc = context.watch<UsersBloc>().state.users;       
 
           return ListView(
             children: [
@@ -56,8 +52,8 @@ class Pagina1Page extends StatelessWidget {
                       
                             final newUser = User(
                               nombre: RandomGenerator.getRandomName(),
-                              edad: min + Random().nextInt((max + 1) - min),
-                              profesiones: [ 'FullStack Developer']
+                              edad: RandomAge.getRandomAge(),
+                              profesiones: [ RandomProfession.getRandomProfession() ],
                             );
                       
                             context.read<UsersBloc>().addUser(newUser);
@@ -68,9 +64,9 @@ class Pagina1Page extends StatelessWidget {
                           child: const Text('create random User...', style: TextStyle( color: Colors.white ) )
                         ),
                       ),                  
-                          ],
-                        ),
-                      ),
+                    ],
+                  ),
+                ),
 
               const _UsersView()
 
@@ -80,11 +76,11 @@ class Pagina1Page extends StatelessWidget {
         },
       ),
 
-     floatingActionButton: FloatingActionButton(
-       child: const Icon( Icons.accessibility_new ),
-       onPressed: () => Navigator.pushNamed(context, 'pagina2')
-     ),
-   );
+      floatingActionButton: FloatingActionButton(
+        child: const Icon( Icons.accessibility_new ),
+        onPressed: () => Navigator.pushNamed(context, 'pagina2')
+      ),
+    );
   }
 }
 
@@ -100,32 +96,29 @@ class InformacionUsuario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    int min = 18;
-    int max = 60;
-
     return Column(
       children: [
 
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: MaterialButton(
-                color: Colors.blue,
-                onPressed: () {
-            
-                  final newUser = User(
-                    nombre: RandomGenerator.getRandomName(),
-                    edad: min + Random().nextInt((max + 1) - min),
-                    profesiones: [ 'FullStack Developer']
-                  );
-            
-                  context.read<UsersBloc>().addUser(newUser);
-            
-                  // BlocProvider.of<UserBloc>(context, listen: false ).add( ActivateUser(newUser) );
-                  BlocProvider.of<UserBloc>(context, listen: false ).add( ActivateUser(newUser) );
-                },
-                child: const Text('Create random User', style: TextStyle( color: Colors.white ) )
-              ),
-            ),
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: MaterialButton(
+            color: Colors.blue,
+            onPressed: () {
+        
+              final newUser = User(
+                nombre: RandomGenerator.getRandomName(),
+                edad: RandomAge.getRandomAge(),
+                profesiones: [ RandomProfession.getRandomProfession() ],
+              );
+        
+              context.read<UsersBloc>().addUser(newUser);
+        
+              // BlocProvider.of<UserBloc>(context, listen: false ).add( ActivateUser(newUser) );
+              BlocProvider.of<UserBloc>(context, listen: false ).add( ActivateUser(newUser) );
+            },
+            child: const Text('Create random User', style: TextStyle( color: Colors.white ) )
+          ),
+        ),
 
 
         _UserView(user: user),
@@ -147,7 +140,7 @@ class _UserView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    print(user.profesiones);
+    //print(user.profesiones);
 
     return Container(
       width: double.infinity,
@@ -225,7 +218,11 @@ class _UsersView extends StatelessWidget {
         ],
       ),
     ) :
-        const Text('nos users')
-    ;
+    const Center(
+      child: Padding(
+        padding: EdgeInsets.only(top: 40.0),
+        child: Text('no List Users'),
+      ),
+    );
   }
 }

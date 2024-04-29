@@ -1,12 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_adv_estados/bloc/users/users_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '/bloc/user/user_bloc.dart';
 import '/models/user.dart';
 import '/config/config.dart';
+import '/bloc/user/user_bloc.dart';
+import '/bloc/users/users_bloc.dart';
 
 
 class Pagina2Page extends StatelessWidget {
@@ -17,8 +15,6 @@ class Pagina2Page extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final userBloc = BlocProvider.of<UserBloc>(context, listen: false );
-    int min = 18;
-    int max = 60;
 
     return Scaffold(
       appBar: AppBar(
@@ -35,8 +31,8 @@ class Pagina2Page extends StatelessWidget {
 
                 final newUser = User(
                   nombre: RandomGenerator.getRandomName(),
-                  edad: min + Random().nextInt((max + 1) - min),
-                  profesiones: [ 'FullStack Developer']
+                  edad: RandomAge.getRandomAge(),
+                  profesiones: [ RandomProfession.getRandomProfession() ],
                 );
 
                 context.read<UsersBloc>().addUser(newUser);
@@ -50,8 +46,8 @@ class Pagina2Page extends StatelessWidget {
             MaterialButton(
               color: Colors.blue,
               onPressed: () {
-// from 1 to 10 included  
-                int randomnum = min + Random().nextInt((max + 1) - min);
+                // from 1 to 10 included  
+                int randomnum = RandomAge.getRandomAge();
                 userBloc.add( ChangeUserAge(randomnum) );
               },
               child: const Text('Cambiar Edad', style: TextStyle( color: Colors.white ) )
@@ -60,6 +56,7 @@ class Pagina2Page extends StatelessWidget {
             MaterialButton(
               color: Colors.blue,
               onPressed: () {
+
                 userBloc.add( AddProfession('Nueva Profesión') );
               },
               child: const Text('Añadir Profesion', style: TextStyle( color: Colors.white ) )
