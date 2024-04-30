@@ -17,12 +17,26 @@ class Pagina1Page extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Page 1'),
         actions: [
-          IconButton(
-            icon: const Icon( Icons.delete_outline ),
-            onPressed: (){
-              BlocProvider.of<UserBloc>(context, listen: false )
-                .add(DeleteUser());
-            }, 
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon( Icons.delete_outline ),
+                onPressed: (){
+                  BlocProvider.of<UserBloc>(context, listen: false )
+                    .add(DeleteUser());
+                }, 
+              ),
+              const Text('delete \nnew user'),
+              IconButton(
+                icon: const Icon( Icons.delete_outline ),
+                onPressed: (){
+                  BlocProvider.of<UsersBloc>(context, listen: false )
+                    .add(DeleteUsers());
+                }, 
+              ),
+              const Text('delete \nall user'),
+              const SizedBox(width: 20.0,)
+            ],
           )
         ],
       ),

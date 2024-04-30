@@ -17,6 +17,8 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
     on<AddUser>(_addUserHandler);
 
+    on<DeleteUsers>( (event, emit ) => emit( const UsersInitialState() ));
+
   }
 
   void _addUserHandler( AddUser event, Emitter<UsersState> emit ) {
