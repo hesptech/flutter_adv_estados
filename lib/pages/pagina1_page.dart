@@ -219,7 +219,7 @@ class _UsersView extends StatelessWidget {
 
               //final guest = usersBloc.state.users[index];
               final profesiones = usersBloc.state.users[index].profesiones.join(', ');
-              print(usersBloc.state.users[index].profesiones);
+              //print(usersBloc.state.users[index].profesiones);
 
               return ListTile(
                 title: Text(usersBloc.state.users[index].nombre),

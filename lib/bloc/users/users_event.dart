@@ -11,4 +11,9 @@ final class AddUser extends UsersEvent{
   const AddUser( this.user );
 }
 
+final class UpdateUser extends UsersEvent{
+  final User user;
+  const UpdateUser( this.user );
+}
+
 class DeleteUsers extends UsersEvent {}

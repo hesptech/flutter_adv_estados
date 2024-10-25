@@ -15,6 +15,8 @@ class Pagina2Page extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final userBloc = BlocProvider.of<UserBloc>(context, listen: false );
+    final usersBloc = BlocProvider.of<UsersBloc>(context, listen: false );
+
 
     return Scaffold(
       appBar: AppBar(
@@ -49,6 +51,18 @@ class Pagina2Page extends StatelessWidget {
                 // from 1 to 10 included  
                 int randomnum = RandomAge.getRandomAge();
                 userBloc.add( ChangeUserAge(randomnum) );
+                print(randomnum);
+
+                final user = context.read<UserBloc>().state.user;
+                final newUser = User(
+                  nombre: user!.nombre,
+                  edad: randomnum,
+                  profesiones: user.profesiones,
+                );
+                print(newUser.edad);
+                usersBloc.add( UpdateUser( newUser ) );
+                //usersBloc.addUser(newUser);
+
               },
               child: const Text('Cambiar Edad', style: TextStyle( color: Colors.white ) )
             ),
