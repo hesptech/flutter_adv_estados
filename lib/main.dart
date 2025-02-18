@@ -17,6 +17,7 @@ class BlocsProviders extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => UsersBloc(), lazy: false, ),
+        BlocProvider(create: ( _ ) => UserBloc() )
       ],
       child: const MyApp(),
     );
@@ -29,11 +30,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: ( _ ) => UserBloc() )
-      ],
-      child: MaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Material App',
         initialRoute: 'pagina1',
@@ -41,7 +38,6 @@ class MyApp extends StatelessWidget {
           'pagina1': ( _ ) => const Pagina1Page(),
           'pagina2': ( _ ) => const Pagina2Page(),
         },
-      ),
-    );
+      );
   }
 }

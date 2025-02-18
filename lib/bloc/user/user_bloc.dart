@@ -12,26 +12,20 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   final void Function( int newAge )? onNewUserCallBack;
   
+  
   UserBloc({this.onNewUserCallBack}) : super( const UserInitialState() ) {
 
-
     on<ActivateUser>( (event, emit ) => emit( UserSetState( event.user ) ));
-    
-    
+
     on<DeleteUser>( (event, emit ) => emit( const UserInitialState() ));
 
-
     on<ChangeUserAge>((event, emit) {
-      if ( !state.existUser ) return;
-      
-      int randomnum = RandomAge.getRandomAge();
-      
+      if ( !state.existUser ) return;    
+      int randomnum = RandomAge.getRandomAge();   
       //emit( UserSetState( state.user!.copyWith( edad: event.age ) ) );
       emit( UserSetState( state.user!.copyWith( edad: randomnum ) ) );
-
       onNewUserCallBack?.call( randomnum );
     });
-
 
     on<AddProfession>((event, emit) {
       if ( !state.existUser ) return;

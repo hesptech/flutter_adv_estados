@@ -6,7 +6,6 @@ import '/config/config.dart';
 import '/bloc/user/user_bloc.dart';
 import '/bloc/users/users_bloc.dart';
 
-
 class Pagina2Page extends StatelessWidget {
   
   const Pagina2Page({Key? key}) : super(key: key);
@@ -16,7 +15,6 @@ class Pagina2Page extends StatelessWidget {
 
     final userBloc = BlocProvider.of<UserBloc>(context, listen: false );
     final usersBloc = BlocProvider.of<UsersBloc>(context, listen: false );
-
 
     return Scaffold(
       appBar: AppBar(
@@ -30,17 +28,15 @@ class Pagina2Page extends StatelessWidget {
             MaterialButton(
               color: Colors.blue,
               onPressed: () {
-
                 final newUser = User(
                   nombre: RandomGenerator.getRandomName(),
                   edad: RandomAge.getRandomAge(),
                   profesiones: [ RandomProfession.getRandomProfession() ],
                 );
-
                 context.read<UsersBloc>().addUser(newUser);
-
                 // BlocProvider.of<UserBloc>(context, listen: false ).add( ActivateUser(newUser) );
                 userBloc.add( ActivateUser(newUser) );
+                Navigator.pushNamed(context, 'pagina1');
               },
               child: const Text('Create random User', style: TextStyle( color: Colors.white ) )
             ),
@@ -51,18 +47,17 @@ class Pagina2Page extends StatelessWidget {
                 // from 1 to 10 included  
                 int randomnum = RandomAge.getRandomAge();
                 userBloc.add( ChangeUserAge(randomnum) );
-                print(randomnum);
-
+                //print(randomnum);
                 final user = context.read<UserBloc>().state.user;
                 final newUser = User(
                   nombre: user!.nombre,
                   edad: randomnum,
                   profesiones: user.profesiones,
                 );
-                print(newUser.edad);
+                //print(newUser.edad);
                 usersBloc.add( UpdateUser( newUser ) );
                 //usersBloc.addUser(newUser);
-
+                Navigator.pushNamed(context, 'pagina1');
               },
               child: const Text('Cambiar Edad', style: TextStyle( color: Colors.white ) )
             ),
@@ -70,8 +65,8 @@ class Pagina2Page extends StatelessWidget {
             MaterialButton(
               color: Colors.blue,
               onPressed: () {
-
                 userBloc.add( AddProfession('Nueva Profesión') );
+                Navigator.pushNamed(context, 'pagina1');
               },
               child: const Text('Añadir Profesion', style: TextStyle( color: Colors.white ) )
             ),
